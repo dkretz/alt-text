@@ -1,0 +1,60 @@
+// eb-edit/src/App.jsx
+
+import React, { useState, useEffect } from "react";
+
+import "./App.css";
+import TabSwitch from "./components/TabSwitch";
+
+function App(props) {
+  const [pgid, setPgid] = useState();
+
+  function handleGo(e) {
+    let id = parseInt( $("pgint").value ) ;
+    if (id > 0) {
+      fetch(`https://www.gutenberg.org/files/${id}/${id}`)
+        .then((rsp) => {
+          let parser = new DOMParser();
+          let doc = parser.parseFromString(rsp.text);
+        })
+        .then((doc) => {
+          console.log(doc.getElementById("body"));
+        });
+    }
+  }
+
+  if (!pgid) {
+    return (
+      <>
+        <div id="App">
+          <h2 className="hdr2">Text Twister</h2>
+          {/* <TabSwitch edition={props.edition} volume={props.volume} pgseq={pgseq} setImageurl={setImgurl} /> */}
+          <label htmlFor="pgint">
+            Ebook
+            <input id="pgint" name="pgint" type="number" />
+            <input
+              type="button"
+              name="btngo"
+              id="btngo"
+              onClick={handleGo}
+              value="Go"
+            />
+          </label>
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div id="App">
+          <h2 className="hdr2">Text Twister</h2>
+          {/* <TabSwitch edition={props.edition} volume={props.volume} pgseq={pgseq} setImageurl={setImgurl} /> */}
+          <input type="number" id="pgval" name="pgval"></input>
+          <input type="buitton" value="Go" onClick={handleGo}></input>
+          <TabSwitch pgid={pgid} />
+        </div>
+      </>
+    );
+  }
+}
+
+export default App;
