@@ -19,6 +19,7 @@ export default function EditorCard(props) {
 
   const handleSave = (e) => {
     console.log(e);
+    props.setText(refEditor.current.getValue());
     /*
     const pbody = JSON.stringify({
       query: "save_volume",

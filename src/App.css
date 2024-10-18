@@ -147,6 +147,23 @@ iframe {
   width: 100%;
 }
 
+li {
+  border: 1px solid gray;
+  text-align: left;
+  display: flex;
+}
+
+.altarea {
+  flex: 1;
+}
+
+.previmg img {
+  float: left;
+  flex: 1;
+}
 .previmg {
+  display: flex;
+  flex 1;
   height: 80px;
+  border: 1px solid gray;
 }
