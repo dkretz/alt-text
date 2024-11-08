@@ -18,8 +18,8 @@ export default function EditorCard(props) {
   };
 
   const handleSave = (e) => {
-    console.log(e);
-    props.setText(refEditor.current.getValue());
+    console.log("handleSave", e);
+    props.setHtml(refEditor.current.editor.session.getValue());
     /*
     const pbody = JSON.stringify({
       query: "save_volume",
@@ -41,9 +41,9 @@ export default function EditorCard(props) {
     */
   };
 
-  function SaveButton({ handleSave }) {
+  function SaveButton() {
     return (
-      <button id="go_button" onClick={handleSave} className="lfloat">
+      <button id="save_button" onClick={handleSave} className="lfloat">
         Save
       </button>
     );
@@ -58,9 +58,7 @@ export default function EditorCard(props) {
       return;
     }
 
-    let srch = refEditor.current.editor.$search;
-
-    // debugger;
+    const srch = refEditor.current.editor.$search;
 
     const re = 'xml:id="(.*?)"';
     refEditor.current.editor.find(re, {
@@ -100,17 +98,19 @@ export default function EditorCard(props) {
      */
   });
 
+  /*
   const handleTextChange = (e) => {
     const id = e.match(/\[eBook #(\d+)\]/)[1];
     const imgpath = ` src="https://www.gutenberg.org/cache/epub/${id}/images`;
     const ace_text = e.replace(/\ssrc="images/g, imgpath);
-    props.setText(ace_text);
+    props.setHtml(ace_text);
   };
+  */
 
   return (
     <div id="divace" className="half">
       <div id="divlefthdr">
-        <SaveButton handleSave={handleSave} />
+        <SaveButton />
       </div>
       <AceEditor
         // onClick={handleClick}
@@ -125,8 +125,8 @@ export default function EditorCard(props) {
         onLoad={aceLoad}
         // onSelectionChange={handleSelectionChange}
         onCursorChange={handleCursorMove}
-        onChange={handleTextChange}
-        value={props.text}
+        // onChange={handleTextChange}
+        value={props.html}
         setOptions={{ useWorker: false, fontSize: 16 }}
         theme="github"
       />

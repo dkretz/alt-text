@@ -23,12 +23,12 @@ h1 {
 }
 
 .save_button {
+  position: absolute;
   padding: 2px 5px;
 }
 
 button {
   display: inline-block;
-  float: right;
 }
 
 h1, nh2, h3 {
@@ -130,9 +130,6 @@ canvas {
   height: 100%;
 }
 
-#ebeditor {
-}
-
 #divpreview {
   border: 1ps solid orange;
   height: 100%;
@@ -153,17 +150,32 @@ li {
   display: flex;
 }
 
-.altarea {
-  flex: 1;
-}
-
 .previmg img {
   float: left;
   flex: 1;
+  margin: 2px;
+}
+
+img {
+  min-height: 80px;
+  max-height: 200px;
+  max-width: 300px;
 }
 .previmg {
   display: flex;
-  flex 1;
-  height: 80px;
   border: 1px solid gray;
+  margin: 2px;
+  max-width: 70%;
+  max-height: 70%;
+}
+
+.alt-block {
+  flex: 1;
+  border: 1px solid gray;
+  background-color: white;
+  margin: 2px;
+}
+
+#modaltext {
+  width: 100%;
 }

@@ -1,56 +1,69 @@
-// PreviewCard - displays the entire ebook from synthesized html
-//    using the original head section plus base tag (to find imgs)
-//    and the current state of the body section
+//
+// todo
+// trap image selection from frame and call {props.setImage}
+//   and ...
+// changing props.image should look it up and scrollIntoView
 
-import {useState } from "react";
-import Frame, { useFrame } from "react-frame-component";
-
-
-const InnerComponent = () => {
-  // Hook returns iframe's window and document instances from Frame context
-  const { document, window } = useFrame();
-
-  // You can now use the document and window instances of the iframe
-  // For example, you can manipulate the iframe's content or attributes
-  console.log("iframe document:", document);
-  console.log("iframe window:", window);
-
-  return null;
-};
-
+import React, {useRef, useEffect, useState} from "react";
+import Frame, {FrameContextConsumer, useFrame} from "react-frame-component";
+// props: html 
 export default function PreviewCard(props) {
-  // const [doc, setDoc] = useState();
 
-  // user clicks on an image from the page - sync to image list
-  // so image list can be focused.
-  // check target for an img tag
-  const handleImgSelect = (i) => {
-    props.setImage(i.targetd);
+  const liref = useRef();
+
+  const handleDivSelect = (e) => {
+    console.log("Div Select", e);
+  };
+  const handleIframeLoad = (e) => {
+    console.log("Iframe Load", e);
+  };
+  const handleFrameClick = (e) => {
+    console.log("Iframe click", e);
   };
 
-  // if(props.image) {
-    // doc.getElementById.scrollIntoView();
-  // }
+  const ibase = props.url.href.substring(0, props.url.href.lastIndexOf('/'));
+  const ihtml = props.html.replace(/<\/head>/uis,`"<base href=${ibase}/></head>"`);
 
-  // add the base tag to the head section
-  const urlbase = props.url.match(/(.*)\//uis)[1];
-  const base = `<base href="${urlbase}" />`;
-  const vhead = props.dom.head.innerHTML + base;
-  // const vhead = props.dom.head.innerHTML;
+  function handleImageClick(e) {
+    console.log("clicked ", e.target.id);
+    props.setImage(e.target);
+  }
 
-  const vrepl = `"$1${props.url}/$2"`;
-  const vbody = props.dom.body.innerHTML.replace(/(<img.*?src=")(.*?)"/uisg, vrepl);
+  useEffect(() => {
+    if(props.image) {
+      $(props.image.id).scrollIntoView();
+      // liref.current.document.getElementById(props.image.id).scrollIntoView();
+    }
+  }, [props.image])
+
   return (
-    <div className="half" id="divpreview" onClick={handleImgSelect}>
-      <Frame
-        id="pgframe"
-        ref={props.iFrameRef}
-        // head={vhead}
-        initialContent={vbody}
-        onClick={handleImgSelect}
-      >
-        <InnerComponent onClick={handleImgSelect} />
-      </Frame>
+    <div 
+      className="half" 
+      id="divpreview" 
+      onClick={handleDivSelect}
+      onLoad={handleIframeLoad}>
+    <Frame 
+      ref={liref} 
+      id="pvwframe" 
+      initialContent={ihtml}
+      src={props.url} 
+      onClick={handleFrameClick}
+      onLoad={handleIframeLoad}>
+        <FrameContextConsumer>
+        {
+        ({document, window}) => {
+          console.log("document - props.image is ", props.image);
+          const iimgs = document.getElementsByTagName("img");
+          for(let iimg of iimgs) {
+            iimg.addEventListener("click", handleImageClick);
+          }
+          if(props.image) {
+            document.getElementById(props.image.id).scrollIntoView();
+          }
+        }
+        }
+        </FrameContextConsumer>
+    </Frame>
     </div>
   );
 }

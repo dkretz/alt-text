@@ -3,19 +3,23 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
 
-import MetaBox from "./MetaBox";
+import ImageModal from "./ImageModal";
 
-function ImageItem({image, url}) {
-  const imgurl = url + image.src.match(/.*\/(images.*)/uis)[1];
+function ImageItem(props) {
+  const imgsrc = new URL(new URL(props.image.src).pathname.substring(1), props.url.href).href;
+  const imgalt = (props.image.alt === "" ? "none" : props.image.alt) ;
+
+  function handleImageClick(e) {
+    props.setImage(e.target);
+  }
+
   return (
-    <li key={image.id}>
-        <img id={image.id} src={imgurl} className="previmg" alt={image.alt} />
-        <textarea 
-          className="altarea" 
-          id={'txt'+image.id} 
-          name={'txt'+image.id} 
-          defaultValue={image.alt} />
-    </li>
+    <>
+        <img id={props.image.id} src={imgsrc} className="previmg" alt={imgalt} onClick={handleImageClick} />
+        <div id={'div'+props.image.id} className="alt-block" >
+        {imgalt}
+        </div>
+    </>
   );
 }
 
@@ -23,6 +27,7 @@ export default function ImageList(props) {
 
   // convert html object collection to an array so we can map.
   const images = [...props.images];
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   let nsum = 0;
   let nblank = 0;
@@ -38,29 +43,617 @@ export default function ImageList(props) {
     if (image.alt === "") {
       nblank += 1;
     }
-    return <ImageItem key={image.id} image={image} url={props.url}/>;
+    return <ImageItem key={image.id} url={props.url} image={image} setImage={props.setImage} />;
   });
 
   // if user selects an image, send it back to TabSwitch
   const handleSelect = (e) => {
-    // const i = e.target.querySelector("img");
-    // set the image state in TabSwitch
+    
+    console.log(handleSelect, e.target);
     if(e.target.tagName.toLowerCase() === 'img') {
       props.setImage(e.target);
     }
+    else if(e.target.className.toLowerCase() === 'alt-block') {
+      setModalIsOpen(true);
+    }
   };
 
-  // construct li elems for ol tag
-  // const image_list = images.map();
+  const handleListClick = ( e => {
+    console.log(e.target);
+  })
+
 
   return (
     <div id="divimglist" className="half">
-      <MetaBox nsum={nsum} nblank={nblank} />
-      <ul 
-        id="selimage" 
-        onClick={handleSelect}>
+      <ImageModal url={props.url} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} image={props.image}
+        onDoubleClick={handleSelect} />
+    <ol>
           {image_list}
-    </ul>
+    </ol>
     </div>
-  );
+  )
 }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
