@@ -23,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-files-preview": "^2.4.0",
     "react-frame-component": "^5.2.7",
+    "react-modal-resizable-draggable": "^0.1.6",
     "react-router-dom": "^6.23.1",
     "react-select": "^5.8.1",
     "requirejs": "^2.3.6",

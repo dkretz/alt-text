@@ -7,16 +7,20 @@ import React, {useState} from "react";
 import "./App.css";
 import TabSwitch from "./components/TabSwitch";
 import PromptForHtmlFile from "./components/PromptForHtmlFile";
+import RadioInputMode from "./components/RadioInputMode";
 // import PromptForBookId from "./components/PromptForBookId";
-import { keyWordCompleter } from "ace-builds/src-noconflict/ext-language_tools";
 
 function App() {
 
+  const [inputMode, setInputMode] = useState();
   const [id, setId] = useState();
   const [html, setHtml] = useState();
   const [url, setUrl] = useState();
 
   
+  if(! inputMode) {
+    return (<RadioInputMode setInputMode={setInputMode} />);
+  }
   // const [url, setUrl] = useState('https://www.gutenberg.org/files/67098/67098-h/67098-h.htm');
   // const url = pg_url_for_book(id);
 
@@ -82,7 +86,6 @@ function App() {
 
 
   return <PromptForHtmlFile setHtml={setHtml} />;
-  // return <><h1>Fail!</h1></>
 }
 
 export default App;

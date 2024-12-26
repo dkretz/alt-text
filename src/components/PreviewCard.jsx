@@ -27,6 +27,7 @@ export default function PreviewCard(props) {
   function handleImageClick(e) {
     console.log("clicked ", e.target.id);
     props.setImage(e.target);
+    e.preventDefault();
   }
 
   useEffect(() => {
@@ -52,7 +53,6 @@ export default function PreviewCard(props) {
         <FrameContextConsumer>
         {
         ({document, window}) => {
-          console.log("document - props.image is ", props.image);
           const iimgs = document.getElementsByTagName("img");
           for(let iimg of iimgs) {
             iimg.addEventListener("click", handleImageClick);

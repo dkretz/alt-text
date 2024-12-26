@@ -1,37 +1,29 @@
-import { useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
+import ReactModal from "react-modal-resizable-draggable";
 
 export default function ImageModal(props) {
-  if (! props.image || !props.modalIsOpen) {
+
+  if (!props.image) {
     return "";
   }
 
-  const imgsrc = new URL(url.href, props.image.src).href;
+
+  const handleClose = (e) => {
+    props.closeModal();
+  };
+
   return (
-    <Dialog
-      onClose={() => props.setModalIsOpen(false)}
-      open={props.modalIsOpen}
-    >
-      <DialogTitle>Image Alt-Text</DialogTitle>
-      <DialogContent>
-        <img src={imgsrc} />
-        <textarea 
-            defaultValue={props.image.alt ?? 'none'}
-            id="modaltext"
-            className="altarea"
-            name="modaltextid" />
-      </DialogContent>
-      <DialogActions>
-        <Button variant="contained" onClick={() => props.setModalIsOpen(false)}>
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <div>
+      <ReactModal
+        isOpen={props.isOpen}
+        initWidth={800}
+        initHeight={400}
+        className="modal-custom-class"
+      >
+      <img alt={props.image.alt} src={props.image.src} />
+
+  
+        <button onClick={handleClose}>Close modal</button>
+      </ReactModal>
+    </div>
   );
 }
