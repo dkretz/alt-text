@@ -1,79 +1,54 @@
-import React, { useState } from "react";
-
-/*
-const styles = {
-    container: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    heading: {
-        color: "green",
-        textAlign: "center",
-    },
-    radioButton: {
-        padding: "12px 16px",
-        borderRadius: "8px",
-        margin: "8px",
-        border: "2px solid #007BFF",
-        background: "#fff",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "280px",
-        cursor: "pointer",
-        transition:
-            "background-color 0.3s, color 0.3s",
-    },
-    selected: {
-        background: "#007BFF",
-        color: "#fff",
-        borderColor: "#007BFF",
-    },
-    list: {
-        listStyleType: "none",
-        padding: 0,
-        textAlign: "center",
-    },
-};
-*/
+import React, { useEffect, useState } from "react";
+import TwisterTitle from "./TwisterTitle";
 
 export default function RadioInputMode(props) {
   const _SOURCES = [
     { code: "url", name: "URL" },
     { code: "ebook", name: "PG Book #" },
     { code: "file", name: "Local File" },
-    { code: "manual", name: "Paste HTML" },
+    { code: "html", name: "Paste HTML" },
     { code: "pooh", name: "Winnie-the-Pooh" },
   ];
+  const [inputMode, setInputMode] = useState();
 
+  useEffect(() => {
+    if(inputMode) {
+    props.setInputMode(inputMode);
+    console.log("Radio noticed inputMode");
+    }
+  },[inputMode]);
+
+  // const handleKey = (k) => {
+    // console.log("key ", k);
+  // };
   // when a src is selected, pass it up to the parent
-  function handleButton(e) {
-    props.setInputMode(e.target.id);
-    console.log(e.target.id);
-  }
+  const handleButton = (e) => {
+    setInputMode(e.target.id);
+    console.log("radio: ", e.target.id);
+  };
 
   const input_sources = _SOURCES.map((src) => {
     return (
-      <li
-        display="inline"
-        key={src.code}
-      >
         <button
           id={src.code}
           className="btnsource"
           onClick={handleButton}
+          key={src.code}
         >
           {src.name}
         </button>
-      </li>
     );
   });
 
+  console.log(import.meta.env.VITE_VERSION);
+  console.log(import.meta.env);
+
   return (
-    <div id="div-input">
+    <>
+    <div id="div-input" className="divinput">
       <h3 id="input-header">Input From: </h3>
       <ul className="srcButtons">{input_sources}</ul>
     </div>
+    </>
   );
 }

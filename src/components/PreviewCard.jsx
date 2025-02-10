@@ -4,11 +4,10 @@
 //   and ...
 // changing props.image should look it up and scrollIntoView
 
-import React, {useRef, useEffect, useState} from "react";
-import Frame, {FrameContextConsumer, useFrame} from "react-frame-component";
-// props: html 
+import React, { useRef, useEffect, useState } from "react";
+import Frame, { FrameContextConsumer, useFrame } from "react-frame-component";
+// props: html
 export default function PreviewCard(props) {
-
   const liref = useRef();
 
   const handleDivSelect = (e) => {
@@ -21,8 +20,14 @@ export default function PreviewCard(props) {
     console.log("Iframe click", e);
   };
 
-  const ibase = props.url.href.substring(0, props.url.href.lastIndexOf('/'));
-  const ihtml = props.html.replace(/<\/head>/uis,`"<base href=${ibase}/></head>"`);
+  const ibase = props.baseUrl.href.substring(
+    0,
+    props.baseUrl.href.lastIndexOf("/")
+  );
+  const ihtml = props.html.replace(
+    /<\/head>/isu,
+    `"<base href=${ibase}/></head>"`
+  );
 
   function handleImageClick(e) {
     console.log("clicked ", e.target.id);
@@ -31,39 +36,40 @@ export default function PreviewCard(props) {
   }
 
   useEffect(() => {
-    if(props.image) {
-      $(props.image.id).scrollIntoView();
+    if (props.image) {
+      $(props.image.id).scrollIntoView({ behavior: "smooth", block: "center" });
       // liref.current.document.getElementById(props.image.id).scrollIntoView();
     }
-  }, [props.image])
+  }, [props.image]);
 
   return (
-    <div 
-      className="half" 
-      id="divpreview" 
+    <div
+      id="divpreview"
+      className="card"
       onClick={handleDivSelect}
-      onLoad={handleIframeLoad}>
-    <Frame 
-      ref={liref} 
-      id="pvwframe" 
-      initialContent={ihtml}
-      src={props.url} 
-      onClick={handleFrameClick}
-      onLoad={handleIframeLoad}>
+      onLoad={handleIframeLoad}
+    >
+      <Frame
+        ref={liref}
+        id="pvwframe"
+        name="pvwframe"
+        initialContent={ihtml}
+        src={props.url}
+        onClick={handleFrameClick}
+        onLoad={handleIframeLoad}
+      >
         <FrameContextConsumer>
-        {
-        ({document, window}) => {
-          const iimgs = document.getElementsByTagName("img");
-          for(let iimg of iimgs) {
-            iimg.addEventListener("click", handleImageClick);
-          }
-          if(props.image) {
-            document.getElementById(props.image.id).scrollIntoView();
-          }
-        }
-        }
+          {({ document, window }) => {
+            const iimgs = document.getElementsByTagName("img");
+            for (let iimg of iimgs) {
+              iimg.addEventListener("click", handleImageClick);
+            }
+            if (props.image) {
+              document.getElementById(props.image.id).scrollIntoView();
+            }
+          }}
         </FrameContextConsumer>
-    </Frame>
+      </Frame>
     </div>
   );
 }

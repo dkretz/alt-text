@@ -1,0 +1,23 @@
+import React from "react";
+import TwisterTitle from "./TwisterTitle";
+// import pooh_html from "/pg67098-images.html?url";
+
+// import ebook_text from "
+// Test with this:
+// https://ebookfoundation.org/cache/epub/67098/67098-h.html
+
+  // const html = pooh_html;
+  // props.setHtml(html);
+
+
+export default function PromptForPooh(props) {
+
+
+  fetch(props.url)
+  .then( res => {
+    return res.text();
+  })
+  .then( html => {
+    props.setHtml(html);
+  });
+}

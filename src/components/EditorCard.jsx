@@ -108,7 +108,7 @@ export default function EditorCard(props) {
   */
 
   return (
-    <div id="divace" className="half">
+    <div id="divace">
       <div id="divlefthdr">
         <SaveButton />
       </div>
@@ -118,7 +118,6 @@ export default function EditorCard(props) {
         mode="xml"
         keyboardHandler="vim"
         name="ebeditor"
-        width="100%"
         editorProps={{ height: "80vh" }}
         // onScroll={aceScroll}
         // onResize={aceResize}

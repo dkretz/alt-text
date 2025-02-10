@@ -4,42 +4,37 @@ import { useState, useEffect } from "react";
 
 import ImageModal from "./ImageModal";
 
+// props - image url  handleEditClick handleImageClick
 function ImageItem(props) {
   const imgsrc = new URL(
-    new URL(props.image.src).pathname.substring(1),
-    props.url.href
-  ).href;
-  const imgalt = props.image.alt === "" ? "none" : props.image.alt;
-
-  const handleEditButton = (e => {
-    console.log("handleEditButton", e.target.id);
-    props.handleEditClick(e);
-  })
-
+    new URL(props.src).pathname.substring(1),
+    props.baseUrl
+  );
 
   return (
     <>
       <div
-        id={"div" + props.image.id}
+        id={"div" + props.id}
         className="alt-block"
       >
         <img
-          id={props.image.id}
+          id={props.id}
+          key={props.id}
           src={imgsrc}
           className="previmg"
-          alt={imgalt}
+          alt={props.alt}
           onClick={props.handleImageClick}
         />
         <div className="divalt">
-        {imgalt}
-        <button
-          id={"btn" + props.image.id}
-          name={"btn" + props.image.id}
-          className="btn-edit"
-          onClick={handleEditButton}
-        >
-          Edit
-        </button>
+          {props.alt}
+          <button
+            id={"btn" + props.id}
+            name={"btn" + props.id}
+            className="btn-edit"
+            // onClick={props.handleEditClick}
+          >
+            Edit
+          </button>
         </div>
       </div>
     </>
@@ -48,61 +43,81 @@ function ImageItem(props) {
 
 export default function ImageList(props) {
   // convert html object collection to an array so we can map.
-  const images = [...props.images];
+  // const images = [...props.images];
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
 
   if (props.images.length === 0) {
     console.log("No images");
+    alert("No images)");
     return "";
   }
 
-  const openModal = (() => setModalIsOpen(true));
-  const closeModal = (() => setModalIsOpen(false));
+  const handleSetImage = (img) => {
+    props.setImage(img);
+  };
 
-  const handleEditClick = (e => {
-    console.log(e, e.target.id);
-    props.setImage(
-      e.target.parentNode.parentNode.querySelector("img")
-    );
+  const handleEditClick = (e) => {
+    console.log("handleEditClick: ", e, e.target.id);
+    handleSetImage(e.target.parentNode.parentNode.querySelector("img"));
     openModal();
     // const iimage = e.target.parentNode.querySelect("img");
     // props.setImage(iimage);
     // props.handleEditClick();
-  });
+  };
 
   // if user selects an image, send it back to TabSwitch
-  const handleImageClick = ((e) => {
+  const handleImageClick = (e) => {
     console.log("handleImageClick", e.target.id);
     props.setImage(e.target);
-  });
+  };
 
-  const image_list = images.map((image) => {
+  useEffect(() => {
+    if (props.image) {
+      $(props.image.id).scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [props.image]);
 
+  const imglist = props.images.map((image) => {
     return (
       <ImageItem
+        src={image.src}
+        alt={image.alt}
         key={image.id}
-        url={props.url}
-        image={image}
-        setImage={props.setImage}
-        handleEditClick={handleEditClick}
-        closeModal={closeModal}
+        id={image.id}
+        baseUrl={props.baseUrl}
         handleImageClick={handleImageClick}
       />
     );
+    // <ImageItem image={img} />;
+    // image={props.image}
+    // handleImageClick={handleImageClick}
+    // handleEditClick={handleEditClick}
   });
 
   return (
-    <div
-      id="divimglist"
-      className="half"
-    >
-      <ImageModal
-        url={props.url}
-        image={props.image}
-        closeModal={closeModal}
-        isOpen={modalIsOpen}
-      />
-      {image_list}
-    </div>
+    <>
+      <div
+        id="divimglist"
+        className="card"
+      >
+        {imglist}
+      </div>
+    </>
   );
+  return (
+    <i>
+      <ImageItem image={i} />
+    </i>
+  );
+  // return (
+  // <div
+  // id="divimglist"
+  // className="half"
+  // >
+  // <>{imglist}</>
+  // </div>
+  // );
 }
