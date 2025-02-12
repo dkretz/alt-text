@@ -49,7 +49,7 @@ function SourceMode(props) {
 }
 
 function App() {
-  const version = "0.1.14";
+  const version = "0.2.00";
 
   const [inputMode, setInputMode] = useState();
 
