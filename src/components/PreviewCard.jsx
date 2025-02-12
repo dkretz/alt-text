@@ -37,7 +37,9 @@ export default function PreviewCard(props) {
 
   useEffect(() => {
     if (props.image) {
-      $(props.image.id).scrollIntoView({ behavior: "smooth", block: "center" });
+      $(props.image.id).scrollIntoView(
+        { behavior: "smooth",
+          block: "center" });
       // liref.current.document.getElementById(props.image.id).scrollIntoView();
     }
   }, [props.image]);
@@ -65,7 +67,9 @@ export default function PreviewCard(props) {
               iimg.addEventListener("click", handleImageClick);
             }
             if (props.image) {
-              document.getElementById(props.image.id).scrollIntoView();
+              document.getElementById(props.image.id).scrollIntoView(
+                { behavior: "smooth", block: "center" }   
+              );
             }
           }}
         </FrameContextConsumer>

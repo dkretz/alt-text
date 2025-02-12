@@ -130,6 +130,10 @@ ul {
   font-size: .6em;
 }
 
+.div-radio {
+  justify-content: center;
+  width:50%; 
+}
 #App {
   height: 98vh;
   width: 100vw;
@@ -148,11 +152,12 @@ ul {
 }
 #divace {
   flex-direction: column;
+  display: none;
 }
 #divimgcanvas {
   width: 100%;
 }
-#divimg {
+#divimg {/
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -205,7 +210,7 @@ img {
 .alt-block {
   border: 2px solid gray;
   border-radius: 4px;
-  background-color: yellow;
+  background-color: light-yellow;
   margin: 4px;
 }
 

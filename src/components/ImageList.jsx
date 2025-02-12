@@ -31,7 +31,7 @@ function ImageItem(props) {
             id={"btn" + props.id}
             name={"btn" + props.id}
             className="btn-edit"
-            // onClick={props.handleEditClick}
+            onClick={props.handleEditClick}
           >
             Edit
           </button>
@@ -48,6 +48,18 @@ export default function ImageList(props) {
 
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
+  const saveModal = (newAlt) => {
+    if(props.image) {
+      newImages = props.images.map((img) => {
+        if (img.id === props.image.id) {
+          newImage = {...img, alt: newAlt};
+          return newImage;
+        }
+        return img;
+      });
+    props.setImages(newImages);
+    }
+  }
 
   if (props.images.length === 0) {
     console.log("No images");
@@ -63,9 +75,6 @@ export default function ImageList(props) {
     console.log("handleEditClick: ", e, e.target.id);
     handleSetImage(e.target.parentNode.parentNode.querySelector("img"));
     openModal();
-    // const iimage = e.target.parentNode.querySelect("img");
-    // props.setImage(iimage);
-    // props.handleEditClick();
   };
 
   // if user selects an image, send it back to TabSwitch
@@ -76,7 +85,9 @@ export default function ImageList(props) {
 
   useEffect(() => {
     if (props.image) {
-      $(props.image.id).scrollIntoView({ behavior: "smooth", block: "center" });
+      $(props.image.id).scrollIntoView(
+        { behavior: "smooth", 
+          block: "center" });
     }
   }, [props.image]);
 
@@ -89,12 +100,9 @@ export default function ImageList(props) {
         id={image.id}
         baseUrl={props.baseUrl}
         handleImageClick={handleImageClick}
+        handleEditClick={handleEditClick}
       />
     );
-    // <ImageItem image={img} />;
-    // image={props.image}
-    // handleImageClick={handleImageClick}
-    // handleEditClick={handleEditClick}
   });
 
   return (
@@ -105,6 +113,12 @@ export default function ImageList(props) {
       >
         {imglist}
       </div>
+      <ImageModal
+        image={props.image}
+        closeModal={closeModal}
+        saveModal={saveModal}
+        modalIsOpen={modalIsOpen}
+        />
     </>
   );
   return (

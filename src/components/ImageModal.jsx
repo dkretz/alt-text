@@ -1,3 +1,4 @@
+import { useState } from "react"
 import ReactModal from "react-modal-resizable-draggable";
 
 export default function ImageModal(props) {
@@ -6,28 +7,40 @@ export default function ImageModal(props) {
     return "";
   }
 
+  const [taText, setTaText] = useState(props.image.alt);
+
 
   const handleCancel = (e) => {
     props.closeModal();
   };
 
   const handleSave = (e) => {
-    props.saveModal();
+    saveModal();
   };
 
-
-  const handleTextArea = ( e => {
-    console.log(e.value);
-  } );
 
   const handleChkDec = ( e => {
     console.log(e.value);
   } );
 
+  const handleModalLoad = (e) => { console.log("modal loading"); }
+
+  const saveModal = () => {
+    if($("ta-alt").value !== props.image.alt) {
+      props.saveModal($("ta-alt").value);
+    };
+    props.closeModal();
+  };
+
+  const handleTextChange = (e) => {
+    console.log(e.target.value);
+    setTaText(e.target.value);
+  }
+
   return (
-    <div>
+    <div onLoad={handleModalLoad}>
       <ReactModal
-        isOpen={props.isOpen}
+        isOpen={props.modalIsOpen}
         initWidth={800}
         initHeight={400}
         className="modal-custom-class"
@@ -40,8 +53,8 @@ export default function ImageModal(props) {
       <textarea 
         id="ta-alt"
         name="ta-alt"
-        value={props.image.alt}
-        onChange={handleTextArea}
+        value={taText}
+        onChange={(e) => setTaText(e.target.value)}
         />
         <label 
           htmlFor="chkdec">Decorative Label

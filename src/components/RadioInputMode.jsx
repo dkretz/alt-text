@@ -12,14 +12,14 @@ export default function RadioInputMode(props) {
   const [inputMode, setInputMode] = useState();
 
   useEffect(() => {
-    if(inputMode) {
-    props.setInputMode(inputMode);
-    console.log("Radio noticed inputMode");
+    if (inputMode) {
+      props.setInputMode(inputMode);
+      console.log("Radio noticed inputMode");
     }
-  },[inputMode]);
+  }, [inputMode]);
 
   // const handleKey = (k) => {
-    // console.log("key ", k);
+  // console.log("key ", k);
   // };
   // when a src is selected, pass it up to the parent
   const handleButton = (e) => {
@@ -29,14 +29,14 @@ export default function RadioInputMode(props) {
 
   const input_sources = _SOURCES.map((src) => {
     return (
-        <button
-          id={src.code}
-          className="btnsource"
-          onClick={handleButton}
-          key={src.code}
-        >
-          {src.name}
-        </button>
+      <button
+        id={src.code}
+        className="btnsource"
+        onClick={handleButton}
+        key={src.code}
+      >
+        {src.name}
+      </button>
     );
   });
 
@@ -45,10 +45,18 @@ export default function RadioInputMode(props) {
 
   return (
     <>
-    <div id="div-input" className="divinput">
-      <h3 id="input-header">Input From: </h3>
-      <ul className="srcButtons">{input_sources}</ul>
-    </div>
+      <div
+        id="div-input"
+        className="divinput"
+      >
+        <h3 id="input-header">Input From: </h3>
+        <div
+          id="div-radio"
+          className="divradio"
+        >
+          <ul className="srcButtons">{input_sources}</ul>
+        </div>
+      </div>
     </>
   );
 }
