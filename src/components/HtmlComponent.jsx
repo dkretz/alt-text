@@ -28,14 +28,21 @@ export default function HtmlComponent(props) {
   const parser = new DOMParser();
   const idom = parser.parseFromString(props.html, "text/html");
 
-  const ipath = idom.querySelectorAll("meta[name='dcterms.source']")[0].content;
-  const ibase = new URL(dirname(ipath));
+  // const baseUrl = (props.inputMode === "pooh") 
+  // ?  dirname("pooh/pg67098-images.html?url")
+  // : dirname(idom.querySelectorAll("meta[name='dcterms.source']")[0].content);
 
-  console.log("base url will be ", ibase.pathname);
-  const baseUrl = new URL(ibase);
+  const dctsrc = idom.querySelector("meta[name='dcterms.source']");
+  const baseUrl = dirname(dctsrc.content);
+
+  console.log("base url will be ", baseUrl.pathname);
   // setDom( idom );
 
-  const images = Array.from(idom.getElementsByTagName("img"));
+  const iimages = idom.getElementsByTagName("img");
+  if(iimages.length === 0) {
+    throw new Error("No images in HTMLComponent");
+  }
+  const images = Array.from(iimages);
   console.log("images count: ", images.length);
 
   useEffect(() => {console.log("image changed", image)}, [image]);

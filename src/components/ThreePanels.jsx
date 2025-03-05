@@ -59,7 +59,6 @@ export default function ThreePanels(props) {
   }
     */
 
-  console.log("got to three panels");
 
   return (
     <>

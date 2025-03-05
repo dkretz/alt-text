@@ -54,7 +54,6 @@ h1 {
 }
 
 .srcButtons {
-  display: flex;
   list-style: none;
 }
 .btnsource {
@@ -157,7 +156,7 @@ ul {
 #divimgcanvas {
   width: 100%;
 }
-#divimg {/
+#divimg {
   display: flex;
   flex-direction: column;
   overflow: hidden;

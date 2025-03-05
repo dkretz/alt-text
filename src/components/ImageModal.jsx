@@ -32,17 +32,12 @@ export default function ImageModal(props) {
     props.closeModal();
   };
 
-  const handleTextChange = (e) => {
-    console.log(e.target.value);
-    setTaText(e.target.value);
-  }
-
   return (
     <div onLoad={handleModalLoad}>
       <ReactModal
         isOpen={props.modalIsOpen}
         initWidth={800}
-        initHeight={400}
+        maxHeight={900}
         className="modal-custom-class"
       >
       <img  

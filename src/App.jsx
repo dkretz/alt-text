@@ -25,9 +25,10 @@ import PromptForUrl from "./components/PromptForUrl";
 
 // a component to fetch the pooh htmlfrom virtual
 // file in the public directory
-function Pooh() {
-  const pooh_url = new URL("pooh/pg67098-images.html?url", import.meta.url);
-  props.setUrl(pooh_url);
+function Pooh(props) {
+  // const pooh_url = new URL("pooh/pg67098-images.html?url", import.meta.url);
+  const pooh_url = "pooh/pg67098-images.html?url";
+  // props.setUrl(pooh_url.href);
   fetch(pooh_url)
     .then((res) => {
       return res.text();
@@ -45,15 +46,16 @@ function Pooh() {
 
 // a component to set the input mode
 function SourceMode(props) {
-  return <RadioInputMode setInputMode={props.setInputMode} />;
+  return <RadioInputMode 
+    setInputMode={props.setInputMode} />;
 }
 
 function App() {
-  const version = "0.2.00";
+  const version = "0.2.01";
 
   const [inputMode, setInputMode] = useState();
 
-  const [url, setUrl] = useState();
+  // const [url, setUrl] = useState();
   const [eBook, setEBook] = useState();
   const [html, setHtml] = useState();
   const [filePath, setFilePath] = useState();
@@ -69,10 +71,6 @@ function App() {
         <TwisterTitle version={version} />
         <SourceMode
           setInputMode={setInputMode}
-          setUrl={setUrl}
-          setEbook={setEBook}
-          setHtml={setHtml}
-          setFilePath={setFilePath}
         />
       </>
     );
@@ -99,7 +97,7 @@ function App() {
         return (
           <PromptForUrl
             setHtml={setHtml}
-            setUrl={setUrl}
+            // setUrl={setUrl}
           />
         );
         break;
@@ -107,10 +105,10 @@ function App() {
         return <PromptForHtmlText setHtml={setHtml} />;
         break;
       case "pooh":
+          // setUrl("pooh");
         return (
           <Pooh
             setHtml={setHtml}
-            setUrl={setUrl}
           />
         );
         break;
@@ -122,7 +120,6 @@ function App() {
     }
   }
 
-  console.log("headed to html component");
 
   return (
     <HtmlComponent

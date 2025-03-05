@@ -11,26 +11,27 @@ export default function PreviewCard(props) {
   const liref = useRef();
 
   const handleDivSelect = (e) => {
-    console.log("Div Select", e);
+    // console.log("Div Select", e);
   };
   const handleIframeLoad = (e) => {
-    console.log("Iframe Load", e);
+    // console.log("Iframe Load", e);
   };
   const handleFrameClick = (e) => {
-    console.log("Iframe click", e);
+    // console.log("Iframe click", e);
   };
 
-  const ibase = props.baseUrl.href.substring(
+  const ibase = props.baseUrl.substring(
     0,
-    props.baseUrl.href.lastIndexOf("/")
-  );
+    props.baseUrl.lastIndexOf("/")
+  ) ?? "";
   const ihtml = props.html.replace(
     /<\/head>/isu,
     `"<base href=${ibase}/></head>"`
   );
+  // console.log("base href: ", ibase);
 
   function handleImageClick(e) {
-    console.log("clicked ", e.target.id);
+    // console.log("clicked ", e.target.id);
     props.setImage(e.target);
     e.preventDefault();
   }

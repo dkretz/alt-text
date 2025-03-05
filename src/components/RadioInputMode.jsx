@@ -14,7 +14,6 @@ export default function RadioInputMode(props) {
   useEffect(() => {
     if (inputMode) {
       props.setInputMode(inputMode);
-      console.log("Radio noticed inputMode");
     }
   }, [inputMode]);
 
@@ -24,7 +23,6 @@ export default function RadioInputMode(props) {
   // when a src is selected, pass it up to the parent
   const handleButton = (e) => {
     setInputMode(e.target.id);
-    console.log("radio: ", e.target.id);
   };
 
   const input_sources = _SOURCES.map((src) => {
@@ -40,8 +38,6 @@ export default function RadioInputMode(props) {
     );
   });
 
-  console.log(import.meta.env.VITE_VERSION);
-  console.log(import.meta.env);
 
   return (
     <>

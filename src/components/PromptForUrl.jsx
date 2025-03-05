@@ -7,18 +7,17 @@ import TwisterTitle from "./TwisterTitle";
 
 export default function PromptForUrl(props) {
   const TEST_URL = "https://ebookfoundation.org/cache/epub/67098/67098-h.html";
-  ``;
 
   const handleSubmit = (e) => {
-    fetch(TEST_URL, {
-      mode: "cors",
+    const urlval = $("pgurl").value;
+    fetch($(urlval), {
+      mode: "no-cors",
       headers: {
         "Content-Type": "text/plain",
         // 'Access-Control-Allow-Origin: '*',
       },
     })
       .then((res) => {
-        console.log(res);
         return res.text();
       })
       .then((val) => {
@@ -32,11 +31,13 @@ export default function PromptForUrl(props) {
       <div className="container">
         <label htmlFor="pgurl">Enter URL </label>
         <input
-          type="url"
+          type="text"
+          size="80"
           name="pgurl"
           id="pgurl"
         />
         <button
+          id="btn-submit"
           type="submit"
           onClick={handleSubmit}
         >

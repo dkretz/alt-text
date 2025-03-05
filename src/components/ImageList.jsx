@@ -6,10 +6,23 @@ import ImageModal from "./ImageModal";
 
 // props - image url  handleEditClick handleImageClick
 function ImageItem(props) {
-  const imgsrc = new URL(
-    new URL(props.src).pathname.substring(1),
-    props.baseUrl
-  );
+
+  // console.log(new URL(props.src).pathname.substring(1));
+  // console.log(new URL(import.meta.url));
+
+  // const imgsrc = new URL(
+    // new URL(props.src).pathname.substring(1),
+    // import.meta.url).href;
+
+    // const imgsrc = new URL(
+      // new URL(props.src).pathname,
+      // new URL(import.meta.url).origin + "/pooh/"
+    // ).href;
+
+
+    console.log(new URL(props.src).pathname);
+    console.log(new URL(import.meta.url).origin);
+  console.log("imgsrc: ", imgsrc);
 
   return (
     <>
@@ -20,7 +33,7 @@ function ImageItem(props) {
         <img
           id={props.id}
           key={props.id}
-          src={imgsrc}
+          src={props.src}
           className="previmg"
           alt={props.alt}
           onClick={props.handleImageClick}
@@ -62,8 +75,7 @@ export default function ImageList(props) {
   }
 
   if (props.images.length === 0) {
-    console.log("No images");
-    alert("No images)");
+    alert("No images at ImageList");
     return "";
   }
 
@@ -72,14 +84,14 @@ export default function ImageList(props) {
   };
 
   const handleEditClick = (e) => {
-    console.log("handleEditClick: ", e, e.target.id);
+    // console.log("handleEditClick: ", e, e.target.id);
     handleSetImage(e.target.parentNode.parentNode.querySelector("img"));
     openModal();
   };
 
   // if user selects an image, send it back to TabSwitch
   const handleImageClick = (e) => {
-    console.log("handleImageClick", e.target.id);
+    // console.log("handleImageClick", e.target.id);
     props.setImage(e.target);
   };
 
@@ -126,12 +138,4 @@ export default function ImageList(props) {
       <ImageItem image={i} />
     </i>
   );
-  // return (
-  // <div
-  // id="divimglist"
-  // className="half"
-  // >
-  // <>{imglist}</>
-  // </div>
-  // );
 }
